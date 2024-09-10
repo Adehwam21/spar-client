@@ -36,18 +36,20 @@ function Login() {
       const response = await axios.post(API_BASE_URL + 'auth/login', { username, password });
 
       if (response.data.error) {
-        toast.error(response.data.error);
+        toast.error(response.data.error.message);
       } else {
         toast.success('Login Successful.');
 
-        const { token, user } = response.data; // Assume response contains token and user details
+        const { token } = response.data.success; // Assume response contains token and user details
 
         // Store the token and user details in localStorage/sessionStorage
         localStorage.setItem('token', token);
-        localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('username', username);
 
-        // Redirect to dashboard or lobby
-        navigate('/lobby');
+        // Redirect to dashboard or lobby after a second
+        setTimeout(() => {
+          navigate('/lobby');
+        }, 1000);
 
         // Reset the form
         setFormData({
@@ -64,9 +66,9 @@ function Login() {
 
   const handleLoginError = (error) => {
     if (error.response) {
-      if (error.response.status === 400) {
+      if (error.response.status === 404) {
         toast.error('Account does not exist. Try Signing Up');
-      } else if (error.response.status === 401) {
+      } else if (error.response.status === 409) {
         toast.error('Incorrect password');
       } else {
         toast.error('An error occurred on the server. Try again later.');
@@ -107,7 +109,7 @@ function Login() {
             className="absolute right-3 top-2.5 cursor-pointer"
             onClick={togglePasswordVisibility}
           >
-            <Icon icon={showPassword ? 'mdi:eye-off-outline' : 'mdi:eye-outline'} className="text-xl" />
+            <Icon icon={showPassword ? 'mdi:eye-off-outline' : 'mdi:eye-outline'} className="text-gold " />
           </span>
         </div>
         <button
