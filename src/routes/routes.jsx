@@ -1,8 +1,11 @@
 import { createBrowserRouter, Route, createRoutesFromElements } from 'react-router-dom';
 import App from '../App';
-import LandingPage from '../pages/LandingPage/LandingPage'
+import LandingPage from '../pages/LandingPage/LandingPage';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import ProtectedRoute from '../components/ProtectedRoute';
+import TwoPlayerRoom from '../components/room/TwoPlayerRoom/TwoPlayerRoom';
+import ThreePlayerRoom from '../components/room/ThreePlayerRoom/ThreePlayerRoom';
+import FourPlayerRoom from '../components/room/FourPlayerRoom/FourPlayerRoom';
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -16,7 +19,10 @@ export const router = createBrowserRouter(
                     </ProtectedRoute>
                 }
             />
-            {/* Other routes can go here */}
+            {/* Room Routes */}
+            <Route path="/room/2player/:roomId" element={<TwoPlayerRoom />} />
+            <Route path="/room/3player/:roomId" element={<ThreePlayerRoom />} />
+            <Route path="/room/4player/:roomId" element={<FourPlayerRoom />} />
         </Route>
     )
 );

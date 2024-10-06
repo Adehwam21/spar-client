@@ -3,7 +3,6 @@ import GameBoardFour from './GameBoardFour'; // New component for four-player bo
 import PlayerCardRack from '../PlayerCardRack';
 import PlayerCommandBar from '../PlayerCommandBar';
 import RoomHeader from '../RoomHeader';
-import { useGameState } from '../../../hooks/GameStateHooks'; // Adjust import path as needed
 
 function FourPlayerRoom() {
     // Access gameState from context

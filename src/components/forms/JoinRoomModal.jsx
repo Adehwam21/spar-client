@@ -1,14 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BaseModal from './BaseModal';
+import { useDispatch } from 'react-redux'; // Import useDispatch to dispatch Redux actions
+import { joinRoom } from '../../redux/slices/gameSlice'; // Import the joinRoom action
+import { io } from 'socket.io-client';
 
-function JoinRoomModal({ isOpen, onClose, onSubmit }) {
+const socket = io(import.meta.env.VITE_API_BASE_URL); // Initialize socket connection
+
+function JoinRoomModal({ isOpen, onClose }) {
     const [roomNum, setRoomNum] = useState('');
     const [passcode, setPasscode] = useState('');
+    const dispatch = useDispatch();
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        onSubmit({ roomNum, passcode });
+        socket.emit('join-room', { roomNum, passcode });
     };
+
+    useEffect(() => {
+        socket.on('gameStateUpdate', (newGameState) => {
+            dispatch(joinRoom(newGameState));
+        });
+
+        return () => {
+            socket.off('gameStateUpdate');
+        };
+    }, [dispatch]);
 
     return (
         <BaseModal title="Join Room" isOpen={isOpen} onClose={onClose}>

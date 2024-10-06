@@ -1,20 +1,57 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import BaseModal from './BaseModal';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-function CreateRoomModal({ isOpen, onClose, onSubmit }) {
+function CreateRoomModal({ isOpen, onClose }) {
     const [passcode, setPasscode] = useState('');
     const [mode, setMode] = useState('2player');
     const [winningPoints, setWinningPoints] = useState('5');
     const [roomType, setRoomType] = useState('private');
+    const navigate = useNavigate();
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
-        onSubmit({ passcode, mode, winningPoints, roomType });
+
+        try {
+            // Send room creation request to the server
+            const response = await axios.post(`${API_BASE_URL}/game/create-room`, {
+                passcode,
+                mode,
+                winningPoints,
+                roomType
+            });
+
+            let roomID = response.data.success.roomInfo.id
+            let roomToken = response.data.success.roomInfo.cookie
+            let message = response.data.success.message
+
+            localStorage.setItem("roomToken", roomToken)
+            toast.success(message)
+
+
+            // Navigate to the room page based on the mode
+            if (mode === '2player') {
+                setTimeout((navigate(`/room/2player/${roomID}`), 1000));
+            } else if (mode === '3player') {
+                setTimeout((navigate(`/room/3player/${roomID}`), 1000));
+            } else {
+                setTimeout((navigate(`/room/4player/${roomID}`), 1000));
+            }
+
+        } catch (error) {
+            message = respons.data.error.message
+            console.error("Room creation failed:", error);
+            toast.error("Room creating failed.")
+        }
     };
 
     return (
         <BaseModal title="Create Room" isOpen={isOpen} onClose={onClose}>
             <form onSubmit={handleFormSubmit}>
+                {/* Form Fields */}
                 <div className="mb-4">
                     <label className="block text-gray-700 font-medium mb-2">Passcode</label>
                     <input

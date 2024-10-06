@@ -1,9 +1,9 @@
 import React from 'react';
-import GameBoardThree from './GameBoardThree'; // New component for three-player board
+import GameBoardThree from './GameBoardThree';
 import PlayerCardRack from '../PlayerCardRack';
 import PlayerCommandBar from '../PlayerCommandBar';
 import RoomHeader from '../RoomHeader';
-import { useGameState } from '../../../hooks/GameStateHooks'; // Adjust import path as needed
+
 
 function ThreePlayerRoom() {
     // Access gameState from context
