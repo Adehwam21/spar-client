@@ -1,30 +1,30 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import GameBoardTwo from './GameBoardTwo';
 import PlayerCardRack from '../PlayerCardRack';
-import PlayerCommandBar from '../PlayerCommandBar';
 import RoomHeader from '../RoomHeader';
-import { useGameState } from '../../../hooks/GameStateHooks'; // Adjust import path as needed
+import RoomLinkModal from '../../forms/RoomLinkModal';
 
 function TwoPlayerRoom() {
-    // Access gameState from context
-    const { gameState } = useGameState();
+    // Access gameState from Redux store using useSelector
+    const gameState = useSelector((state) => state.game.gameState); // Assumes you have a 'game' slice in your Redux store
 
-    if (!gameState || !gameState.gameState) {
-        return <div>Loading...</div>;
-    }
-
-    const { gameState: gameData } = gameState; // Extract nested gameState
-    const { players, turnSetter, previousRoundWinner, roundStatus } = gameData;
-
-    // Safety check for players length
-    if (players.length < 2) {
-        return <div>Not enough players available...</div>;
-    }
+    // Destructure game data from the Redux state
+    const { players = [], turnSetter, previousRoundWinner } = gameState || {};
 
     const [currentPlayer, opponent] = players;
 
+    // Show RoomLinkModal if the game hasn't started or players haven't joined
+    if (!gameState || players.length < 2) {
+        return (
+            <div>
+                <RoomLinkModal roomId={"7893"} link={"http://eude.e3940"} isOpen={true} />
+            </div>
+        );
+    }
+
     return (
-        <div className='h-screen overlow-hidden'>
+        <div className='h-screen overflow-hidden'>
             <div>
                 <RoomHeader
                     eventMessage={`Current turn: ${turnSetter?.current}`}
@@ -38,9 +38,6 @@ function TwoPlayerRoom() {
             <div className='flex justify-center items-center bg-green-700'>
                 <PlayerCardRack hand={currentPlayer.hand} />
             </div>
-            {/* <div>
-                <PlayerCommandBar roundStatus={roundStatus} />
-            </div> */}
         </div>
     );
 }

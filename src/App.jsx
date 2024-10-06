@@ -1,15 +1,16 @@
 import './App.css';
 import { Toaster } from 'react-hot-toast';
 import { Outlet } from 'react-router-dom';
-import { GameStateProvider } from './context/GameStateContext'; // Import GameStateProvider
+import { Provider } from 'react-redux'; // Import Provider from react-redux
+import store from './redux/reduxStore';
 
 function App() {
   return (
     <>
       <Toaster />
-      <GameStateProvider>
-        <Outlet /> {/* This is where the child routes like /lobby will be rendered */}
-      </GameStateProvider>
+      <Provider store={store}>
+        <Outlet />
+      </Provider>
     </>
   );
 }

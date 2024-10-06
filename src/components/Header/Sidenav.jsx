@@ -1,13 +1,12 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
-import Navbar from './Navbar';
-import UtilitiesPanel from './Utilities/UtilitiesPanel';
 import PlayerAvatar from '../Header/Utilities/PlayerAvatar'; // Import PlayerAvatar component
 
 function SideNav({ isOpen, onClose }) {
+    const username = localStorage.getItem('username')
     return (
         <div
-            className={`fixed inset-0 bg-gray-900 bg-opacity-80 z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed inset-0 bg-gray-900 bg-opacity-80 z-50 transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'} lg:hidden`}
             onClick={onClose}
         >
             <div
@@ -30,7 +29,7 @@ function SideNav({ isOpen, onClose }) {
                             </div>
                         </div>
 
-                        <PlayerAvatar playerName="JohnDoe" avatarUrl="/path/to/avatar.jpg" />
+                        <PlayerAvatar playerName={username} />
                     </div>
 
                     {/* Lower Section */}
