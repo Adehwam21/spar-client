@@ -1,0 +1,345 @@
+{
+  "id": "room123",
+  "roomNum": "4567",
+  "passcode": "secret",
+  "token": "token123",
+  "mode": "fourPlayer",
+  "winningPoints": 100,
+  "players": ["player1", "player2", "player3", "player4"],
+  "winner": null,
+  "vacant": false,
+  "roomType": "Public",
+  "createdBy": "player1",
+  "createdAt": "2024-08-30T00:00:00Z",
+  "endedAt": null,
+  "gameState": {
+    "players": [
+      {
+        "playerIndex": 0,
+        "playersInfo": {
+          "id": "p1",
+          "username": "player1",
+          "email": "player1@example.com",
+          "password": "hashedpassword",
+          "role": "player",
+          "createdAt": "2024-08-30T00:00:00Z",
+          "gamesPlayed": 20,
+          "gamesWon": 5,
+          "profilePicture": "https://imgs.search.brave.com/2uCGZ_Sg6z77ijf15iHdOR3mGwQ4XpXI4GprzXC3O3c/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9wcm9m/aWxlLWF2YXRhci5j/b20vYXNzZXRzL2lt/Zy9zdHlsZXMvb2Zm/aWNlLmpwZWc",
+          "friends": ["player2", "player3", "player4"],
+          "winningStreak": 2
+        },
+        "hand": [
+          { 
+            "rank": "K", 
+            "suit": "Hearts", 
+            "weight": 13, 
+            "repStr": "Kh", 
+            "points": 10, 
+            "image": "https://deckofcardsapi.com/static/img/KH.png" 
+          },
+          { 
+            "rank": "5", 
+            "suit": "Spades", 
+            "weight": 5, 
+            "repStr": "5s", 
+            "points": 5, 
+            "image": "https://deckofcardsapi.com/static/img/5S.png" 
+          },
+          { 
+            "rank": "A", 
+            "suit": "Diamonds", 
+            "weight": 14, 
+            "repStr": "Ad", 
+            "points": 11, 
+            "image": "https://deckofcardsapi.com/static/img/AD.png" 
+          }
+        ],
+        "points": 45
+      },
+      {
+        "playerIndex": 1,
+        "playersInfo": {
+          "id": "p2",
+          "username": "player2",
+          "email": "player2@example.com",
+          "password": "hashedpassword",
+          "role": "player",
+          "createdAt": "2024-08-30T00:00:00Z",
+          "gamesPlayed": 15,
+          "gamesWon": 8,
+          "profilePicture": "https://imgs.search.brave.com/UHtfvcFdOuEcSC0Qq5LV6a8wyidY6EnQvo75FLvZcvs/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9wcm9m/aWxlLWF2YXRhci5j/b20vYXNzZXRzL2lt/Zy9zdHlsZXMvYnVz/aW5lc3MuanBlZw",
+          "friends": ["player1", "player3", "player4"],
+          "winningStreak": 3
+        },
+        "hand": [
+          { 
+            "rank": "10", 
+            "suit": "Clubs", 
+            "weight": 10, 
+            "repStr": "10c", 
+            "points": 8, 
+            "image": "https://deckofcardsapi.com/static/img/0C.png" 
+          },
+          { 
+            "rank": "Q", 
+            "suit": "Hearts", 
+            "weight": 12, 
+            "repStr": "Qh", 
+            "points": 10, 
+            "image": "https://deckofcardsapi.com/static/img/QH.png" 
+          },
+          { 
+            "rank": "7", 
+            "suit": "Diamonds", 
+            "weight": 7, 
+            "repStr": "7d", 
+            "points": 4, 
+            "image": "https://deckofcardsapi.com/static/img/7D.png" 
+          }
+        ],
+        "points": 50
+      },
+      {
+        "playerIndex": 2,
+        "playersInfo": {
+          "id": "p3",
+          "username": "player3",
+          "email": "player3@example.com",
+          "password": "hashedpassword",
+          "role": "player",
+          "createdAt": "2024-08-30T00:00:00Z",
+          "gamesPlayed": 30,
+          "gamesWon": 12,
+          "profilePicture": "https://www.w3schools.com/w3images/avatar2.png",
+          "friends": ["player1", "player2", "player4"],
+          "winningStreak": 1
+        },
+        "hand": [
+          { 
+            "rank": "3", 
+            "suit": "Spades", 
+            "weight": 3, 
+            "repStr": "3s", 
+            "points": 3, 
+            "image": "https://deckofcardsapi.com/static/img/3S.png" 
+          },
+          { 
+            "rank": "9", 
+            "suit": "Hearts", 
+            "weight": 9, 
+            "repStr": "9h", 
+            "points": 6, 
+            "image": "https://deckofcardsapi.com/static/img/9H.png" 
+          },
+          { 
+            "rank": "J", 
+            "suit": "Clubs", 
+            "weight": 11, 
+            "repStr": "Jc", 
+            "points": 9, 
+            "image": "https://deckofcardsapi.com/static/img/JC.png" 
+          }
+        ],
+        "points": 35
+      },
+      {
+        "playerIndex": 3,
+        "playersInfo": {
+          "id": "p4",
+          "username": "player4",
+          "email": "player4@example.com",
+          "password": "hashedpassword",
+          "role": "player",
+          "createdAt": "2024-08-30T00:00:00Z",
+          "gamesPlayed": 10,
+          "gamesWon": 4,
+          "profilePicture": "https://www.w3schools.com/w3images/avatar5.png",
+          "friends": ["player1", "player2", "player3"],
+          "winningStreak": 2
+        },
+        "hand": [
+          { 
+            "rank": "8", 
+            "suit": "Diamonds", 
+            "weight": 8, 
+            "repStr": "8d", 
+            "points": 6, 
+            "image": "https://deckofcardsapi.com/static/img/8D.png" 
+          },
+          { 
+            "rank": "2", 
+            "suit": "Clubs", 
+            "weight": 2, 
+            "repStr": "2c", 
+            "points": 2, 
+            "image": "https://deckofcardsapi.com/static/img/2C.png" 
+          },
+          { 
+            "rank": "6", 
+            "suit": "Spades", 
+            "weight": 6, 
+            "repStr": "6s", 
+            "points": 7, 
+            "image": "https://deckofcardsapi.com/static/img/6S.png" 
+          }
+        ],
+        "points": 30
+      }
+    ],
+    "deck": [
+      { 
+        "rank": "4", 
+        "suit": "Hearts", 
+        "weight": 4, 
+        "repStr": "4h", 
+        "points": 4, 
+        "image": "https://deckofcardsapi.com/static/img/4H.png" 
+      },
+      { 
+        "rank": "2", 
+        "suit": "Spades", 
+        "weight": 2, 
+        "repStr": "2s", 
+        "points": 2, 
+        "image": "https://deckofcardsapi.com/static/img/2S.png" 
+      },
+      { 
+        "rank": "A", 
+        "suit": "Clubs", 
+        "weight": 14, 
+        "repStr": "Ac", 
+        "points": 11, 
+        "image": "https://deckofcardsapi.com/static/img/AC.png" 
+      }
+    ],
+    "moveNumber": 3,
+    "moveWinner": "player2",
+    "leadingCard": {
+      "card": { 
+        "rank": "Q", 
+        "suit": "Hearts", 
+        "weight": 12, 
+        "repStr": "Qh", 
+        "points": 10, 
+        "image": "https://deckofcardsapi.com/static/img/QH.png" 
+      },
+      "username": "player2",
+      "round": 1
+    },
+    "winningCard": {
+      "card": { 
+        "rank": "K", 
+        "suit": "Hearts", 
+        "weight": 13, 
+        "repStr": "Kh", 
+        "points": 10, 
+        "image": "https://deckofcardsapi.com/static/img/KH.png" 
+      },
+      "username": "player1",
+      "round": 1
+    },
+    "roundStatus": "in_progress",
+    "roundNumber": 1,
+    "previousRoundWinner": "player1",
+    "turnSetter": {
+      "current": "player2",
+      "order": ["player1", "player2", "player3", "player4"]
+    },
+    "gameStatus": "in_progress",
+    "playedCards": [
+      {
+        "card": { 
+          "rank": "K", 
+          "suit": "Hearts", 
+          "weight": 13, 
+          "repStr": "Kh", 
+          "points": 10, 
+          "image": "https://deckofcardsapi.com/static/img/KH.png" 
+        },
+        "username": "player1",
+        "round": 1
+      },
+      {
+        "card": { 
+          "rank": "Q", 
+          "suit": "Hearts", 
+          "weight": 12, 
+          "repStr": "Qh", 
+          "points": 10, 
+          "image": "https://deckofcardsapi.com/static/img/QH.png" 
+        },
+        "username": "player2",
+        "round": 1
+      },
+      {
+        "card": { 
+          "rank": "7", 
+          "suit": "Diamonds", 
+          "weight": 7, 
+          "repStr": "7d", 
+          "points": 4, 
+          "image": "https://deckofcardsapi.com/static/img/7D.png" 
+        },
+        "username": "player3",
+        "round": 1
+      }
+    ],
+    "gameHistory": {
+      "data": {
+        "1": {
+          "cardsPlayed": [
+            {
+              "card": { 
+                "rank": "K", 
+                "suit": "Hearts", 
+                "weight": 13, 
+                "repStr": "Kh", 
+                "points": 10, 
+                "image": "https://deckofcardsapi.com/static/img/KH.png" 
+              },
+              "username": "player1",
+              "round": 1
+            },
+            {
+              "card": { 
+                "rank": "Q", 
+                "suit": "Hearts", 
+                "weight": 12, 
+                "repStr": "Qh", 
+                "points": 10, 
+                "image": "https://deckofcardsapi.com/static/img/QH.png" 
+              },
+              "username": "player2",
+              "round": 1
+            },
+            {
+              "card": { 
+                "rank": "7", 
+                "suit": "Diamonds", 
+                "weight": 7, 
+                "repStr": "7d", 
+                "points": 4, 
+                "image": "https://deckofcardsapi.com/static/img/7D.png" 
+              },
+              "username": "player3",
+              "round": 1
+            }
+          ],
+          "winningCard": {
+            "card": { 
+              "rank": "K", 
+              "suit": "Hearts", 
+              "weight": 13, 
+              "repStr": "Kh", 
+              "points": 10, 
+              "image": "https://deckofcardsapi.com/static/img/KH.png" 
+            },
+            "username": "player1",
+            "round": 1
+          }
+        }
+      }
+    }
+  }
+}
