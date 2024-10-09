@@ -1,30 +1,49 @@
 import React, { useState, useEffect } from 'react';
 import BaseModal from './BaseModal';
-import { useDispatch } from 'react-redux'; // Import useDispatch to dispatch Redux actions
-import { joinRoom } from '../../redux/slices/gameSlice'; // Import the joinRoom action
-import { io } from 'socket.io-client';
-
-const socket = io(import.meta.env.VITE_API_BASE_URL); // Initialize socket connection
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setGameState } from '../../redux/slices/gameSlice';
+import { useSocket } from '../../contexts/socketContext';
 
 function JoinRoomModal({ isOpen, onClose }) {
     const [roomNum, setRoomNum] = useState('');
     const [passcode, setPasscode] = useState('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const socket = useSocket(); // Access the socket instance from context
+
+    const username = localStorage.getItem('username');
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        socket.emit('join-room', { roomNum, passcode });
+        if (socket) {
+            socket.emit('join-room', { roomNum, passcode, username });
+        }
     };
 
     useEffect(() => {
-        socket.on('gameStateUpdate', (newGameState) => {
-            dispatch(joinRoom(newGameState));
-        });
+        if (socket) {
+            // Listen for game state updates from the server
+            socket.on('gameStateUpdate', (newGameState) => {
 
-        return () => {
-            socket.off('gameStateUpdate');
-        };
-    }, [dispatch]);
+                dispatch(setGameState(newGameState));
+                let mode = newGameState.roomInfo.roomData.mode;
+
+                if (mode === '2') {
+                    setTimeout(() => navigate(`/room/2player/${roomNum}`), 1000);
+                } else if (mode === '3') {
+                    setTimeout(() => navigate(`/room/3player/${roomNum}`), 1000);
+                } else if (mode === '4') {
+                    setTimeout(() => navigate(`/room/4player/${roomNum}`), 1000);
+                }
+            });
+
+            // Clean up the listener when the component is unmounted
+            return () => {
+                socket.off('gameStateUpdate');
+            };
+        }
+    }, [dispatch, navigate, roomNum, socket]);
 
     return (
         <BaseModal title="Join Room" isOpen={isOpen} onClose={onClose}>
