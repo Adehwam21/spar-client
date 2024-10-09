@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 
 function CreateRoomModal({ isOpen, onClose }) {
     const [passcode, setPasscode] = useState('');
-    const [mode, setMode] = useState('2player');
+    const [mode, setMode] = useState('2');
     const [winningPoints, setWinningPoints] = useState('5');
     const [roomType, setRoomType] = useState('private');
     const navigate = useNavigate();
@@ -33,11 +33,11 @@ function CreateRoomModal({ isOpen, onClose }) {
 
 
             // Navigate to the room page based on the mode
-            if (mode === '2player') {
+            if (mode === '2') {
                 setTimeout((navigate(`/room/2player/${roomID}`), 1000));
-            } else if (mode === '3player') {
+            } else if (mode === '3') {
                 setTimeout((navigate(`/room/3player/${roomID}`), 1000));
-            } else {
+            } else if (mode === '4') {
                 setTimeout((navigate(`/room/4player/${roomID}`), 1000));
             }
 
@@ -70,9 +70,9 @@ function CreateRoomModal({ isOpen, onClose }) {
                         onChange={(e) => setMode(e.target.value)}
                         className="w-full p-2 border border-gray-300 rounded"
                     >
-                        <option value="2player">2 Player</option>
-                        <option value="3player">3 Player</option>
-                        <option value="4player">4 Player</option>
+                        <option value="2">2 Player</option>
+                        <option value="3">3 Player</option>
+                        <option value="4">4 Player</option>
                     </select>
                 </div>
                 <div className="mb-4">
