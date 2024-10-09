@@ -1,5 +1,5 @@
 import React from 'react';
-import PlayerCard from '../PlayerCard';
+import PlayerCard from '../components/PlayerCard';
 
 function GameBoardThree({ players }) {
     return (

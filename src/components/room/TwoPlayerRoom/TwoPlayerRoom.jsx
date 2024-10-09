@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import GameBoardTwo from './GameBoardTwo';
-import PlayerCardRack from '../PlayerCardRack';
-import RoomHeader from '../RoomHeader';
+import PlayerCardRack from '../components/PlayerCardRack';
+import RoomHeader from '../components/RoomHeader';
 import RoomLinkModal from '../../forms/RoomLinkModal';
 
 function TwoPlayerRoom() {
@@ -11,7 +11,6 @@ function TwoPlayerRoom() {
 
     // Destructure game data from the Redux state
     const { players = [], turnSetter, previousRoundWinner } = gameState || {};
-
     const [currentPlayer, opponent] = players;
 
     // Show RoomLinkModal if the game hasn't started or players haven't joined
