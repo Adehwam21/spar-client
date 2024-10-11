@@ -13,15 +13,14 @@ const gameSlice = createSlice({
             state.gameState = action.payload;
         },
         joinRoom(state, action) {
-            state.roomId = action.payload.roomId;
-            state.players = action.payload.players;
+            state.gameState = action.payload
         },
         playCard(state, action) {
             // Update the state based on the card played
             state.gameState = action.payload;
         },
         updateTurn(state, action) {
-            state.turn = action.payload;
+            state.gameState = action.payload;
         },
     },
 });

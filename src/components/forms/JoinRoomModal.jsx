@@ -10,7 +10,7 @@ function JoinRoomModal({ isOpen, onClose }) {
     const [passcode, setPasscode] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const socket = useSocket(); // Access the socket instance from context
+    const socket = useSocket();
 
     const username = localStorage.getItem('username');
 
@@ -25,6 +25,11 @@ function JoinRoomModal({ isOpen, onClose }) {
         if (socket) {
             // Listen for game state updates from the server
             socket.on('gameStateUpdate', (newGameState) => {
+                if (!newGameState) {
+                    return;
+                }
+
+                console.log(`New Room State`, newGameState);
 
                 dispatch(setGameState(newGameState));
                 let mode = newGameState.roomInfo.roomData.mode;

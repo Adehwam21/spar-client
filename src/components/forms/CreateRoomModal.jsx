@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import React, { useEffect, useState } from 'react';
+import { useSocket } from '../../contexts/socketContext';
+import { useNavigate } from 'react-router-dom';
 import BaseModal from './BaseModal';
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -11,6 +12,7 @@ function CreateRoomModal({ isOpen, onClose }) {
     const [roomType, setRoomType] = useState('private');
     const navigate = useNavigate();
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const socket = useSocket();
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
@@ -24,29 +26,37 @@ function CreateRoomModal({ isOpen, onClose }) {
                 roomType
             });
 
-            let roomID = response.data.success.roomInfo.id
-            let roomToken = response.data.success.roomInfo.cookie
-            let message = response.data.success.message
+            roomID = response.data.success.roomInfo.id;
+            let roomToken = response.data.success.roomInfo.cookie;
+            let message = response.data.success.message;
 
-            localStorage.setItem("roomToken", roomToken)
-            toast.success(message)
-
+            localStorage.setItem("roomToken", roomToken);
+            localStorage.setItem("roomNum", roomID)
+            toast.success(message);
 
             // Navigate to the room page based on the mode
             if (mode === '2') {
-                setTimeout((navigate(`/room/2player/${roomID}`), 1000));
+                setTimeout(() => navigate(`/room/2player/${roomID}`), 1000);
             } else if (mode === '3') {
-                setTimeout((navigate(`/room/3player/${roomID}`), 1000));
+                setTimeout(() => navigate(`/room/3player/${roomID}`), 1000);
             } else if (mode === '4') {
-                setTimeout((navigate(`/room/4player/${roomID}`), 1000));
+                setTimeout(() => navigate(`/room/4player/${roomID}`), 1000);
             }
 
         } catch (error) {
-            message = respons.data.error.message
-            console.error("Room creation failed:", error);
-            toast.error("Room creating failed.")
+            let message = error.response?.data?.error?.message || 'Room creation failed.';
+            toast.error(message);
         }
     };
+
+
+    // Emit create-room event after room is created
+    let roomID = localStorage.getItem('roomNum');
+    useEffect(() => {
+        if (socket && roomID) {
+            socket.emit('create-room', roomID);
+        }
+    }, [socket, roomID]);  // Use roomID as a dependency
 
     return (
         <BaseModal title="Create Room" isOpen={isOpen} onClose={onClose}>

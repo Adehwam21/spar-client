@@ -6,6 +6,7 @@ const store = configureStore({
   reducer: {
     game: gameReducer,
   },
+  devTools: import.meta.env.MODE !== 'production',
 });
 
 export default store;
