@@ -29,7 +29,9 @@ function PlayerAvatar({ playerName }) {
     const handleLogout = () => {
         // Clear the localStorage
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        localStorage.removeItem('username');
+        localStorage.removeItem('roomNum');
+        localStorage.removeItem('roomToken');
 
         // Redirect to login page
         navigate('/'); // Use navigate to redirect

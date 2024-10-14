@@ -1,30 +1,41 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { io } from 'socket.io-client';
+import { socket } from '../socket';
 
 // Context
-const SocketContext = createContext(null);
+const SocketContext = createContext(socket);
 
-export const useSocket = () => {
-    return useContext(SocketContext);
-};
+export const useSocket = () => useContext(SocketContext);
 
-// Provider component to wrap the application
 export const SocketProvider = ({ children }) => {
-    const [socket, setSocket] = useState(null);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        const socketInstance = io(import.meta.env.VITE_SERVER_URL, {
-            reconnectionAttempts: 5,
-            timeout: 10000,
+        const token = localStorage.getItem('token');
+
+        if (token) {
+            // Set token dynamically before connecting the socket
+            socket.auth = { token: token };
+            socket.connect();
+            setIsLoggedIn(true); // Set logged in state
+        } else {
+            console.error('No token found. Unable to connect to socket.');
+        }
+
+        // Handle connection events
+        socket.on('connect_error', (err) => {
+            console.error('Socket connection error:', err);
         });
 
-        setSocket(socketInstance);
+        socket.on('connect', () => {
+            console.log('Successfully connected to the socket');
+        });
 
-        // Cleanup the socket when component unmounts
         return () => {
-            if (socketInstance) socketInstance.disconnect();
+            socket.off('connect_error');
+            socket.off('connect');
+            socket.disconnect();
         };
-    }, []);
+    }, [isLoggedIn]);
 
     return (
         <SocketContext.Provider value={socket}>

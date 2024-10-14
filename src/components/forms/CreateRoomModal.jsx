@@ -10,6 +10,7 @@ function CreateRoomModal({ isOpen, onClose }) {
     const [mode, setMode] = useState('2');
     const [winningPoints, setWinningPoints] = useState('5');
     const [roomType, setRoomType] = useState('private');
+
     const navigate = useNavigate();
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
     const socket = useSocket();
@@ -26,13 +27,17 @@ function CreateRoomModal({ isOpen, onClose }) {
                 roomType
             });
 
-            roomID = response.data.success.roomInfo.id;
-            let roomToken = response.data.success.roomInfo.cookie;
-            let message = response.data.success.message;
+            const roomID = response.data.success.roomInfo.roomData.roomNum;
+            const roomToken = response.data.success.roomInfo.cookie;
+            const message = response.data.success.message;
 
             localStorage.setItem("roomToken", roomToken);
-            localStorage.setItem("roomNum", roomID)
+            localStorage.setItem("roomNum", roomID);
             toast.success(message);
+
+            if (socket) {
+                socket.emit('create-room', roomID);
+            }
 
             // Navigate to the room page based on the mode
             if (mode === '2') {
@@ -44,24 +49,14 @@ function CreateRoomModal({ isOpen, onClose }) {
             }
 
         } catch (error) {
-            let message = error.response?.data?.error?.message || 'Room creation failed.';
+            const message = error.response?.data?.error?.message || 'Room creation failed.';
             toast.error(message);
         }
     };
 
-
-    // Emit create-room event after room is created
-    let roomID = localStorage.getItem('roomNum');
-    useEffect(() => {
-        if (socket && roomID) {
-            socket.emit('create-room', roomID);
-        }
-    }, [socket, roomID]);  // Use roomID as a dependency
-
     return (
         <BaseModal title="Create Room" isOpen={isOpen} onClose={onClose}>
             <form onSubmit={handleFormSubmit}>
-                {/* Form Fields */}
                 <div className="mb-4">
                     <label className="block text-gray-700 font-medium mb-2">Passcode</label>
                     <input

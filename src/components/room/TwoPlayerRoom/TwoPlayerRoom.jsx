@@ -6,33 +6,36 @@ import RoomHeader from '../components/RoomHeader';
 import RoomLinkModal from '../../forms/RoomLinkModal';
 
 function TwoPlayerRoom() {
-    // Access gameState from Redux store using useSelector
-    const gameState = useSelector((state) => state.game.gameState); // Assumes you have a 'game' slice in your Redux store
+    // Access gameState from Redux store
+    const roomData = useSelector((state) => state.game.roomState);
 
-    // Destructure game data from the Redux state if gameState is available
-    const { players, turnSetter, previousRoundWinner, roomInfo } = gameState;
-    const [currentPlayer, opponent] = players || [];  // Fallback to empty array if players is undefined
-    const { vacant, roomNum } = roomInfo || {};  // Fallback to empty object if roomInfo is undefined
+    // Destructure game data from the Redux state
+    const { id, vacant, roomNum, gameState } = roomData;
+    const { players, moveWinner, leadingCard } = gameState;
+    const [currentPlayer, opponent] = players;
 
-    if (!gameState || vacant === false) {
+    // Show RoomLinkModal when the room is vacant
+    if (vacant) {
+        let roomNum = localStorage.getItem('roomNum');
         return (
-            <div>
-                <RoomLinkModal roomId={id} link={`http://${import.meta.env.VITE_SERVER_URL}/game/room/2player/${roomNum}`} isOpen={true} />
-            </div>
+            <RoomLinkModal roomId={roomNum} link={`${import.meta.env.VITE_SERVER_URL}/game/room/2player/${roomNum}`} isOpen={true} />
         );
     }
+
+    // Once room is full, show the game board
     return (
         <div className='h-screen overflow-hidden'>
-            <div>
-                <RoomHeader
-                    eventMessage={`Current turn: ${turnSetter?.current}`}
-                    previousRoundWinner={previousRoundWinner}
-                    onLeaveRoom={() => console.log('Leaving room...')}
-                />
-            </div>
-            <div>
-                <GameBoardTwo players={[currentPlayer, opponent]} />
-            </div>
+            {/* Room header with status information */}
+            <RoomHeader
+                eventMessage={`Current turn: Player ${leadingCard?.playerIndex || 'N/A'}`}
+                previousRoundWinner={moveWinner ? `Previous winner: Player ${moveWinner}` : 'No winner yet'}
+                onLeaveRoom={() => console.log('Leaving room...')}
+            />
+
+            {/* Display the game board for two players */}
+            <GameBoardTwo players={players} />
+
+            {/* Player's card rack */}
             <div className='flex justify-center items-center bg-green-700'>
                 <PlayerCardRack hand={currentPlayer?.hand} />
             </div>

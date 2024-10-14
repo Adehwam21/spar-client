@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
+import toast from 'react-hot-toast';
 
 const RoomLinkModal = ({ roomId, link, isOpen, onClose }) => {
     if (!isOpen) return null;
@@ -7,7 +8,7 @@ const RoomLinkModal = ({ roomId, link, isOpen, onClose }) => {
     // Function to copy the room link to the clipboard
     const copyToClipboard = () => {
         navigator.clipboard.writeText(link);
-        alert("Link copied to clipboard!");
+        toast.success("Link copied to clipboard!");
     };
 
     return (
@@ -20,14 +21,13 @@ const RoomLinkModal = ({ roomId, link, isOpen, onClose }) => {
                     <span className="text-gray-800">{roomId}</span>
                 </p>
 
-                <div className="relative mb-4">
-                    <div className="text-blue-600 underline break-words">{link}</div>
-                    <span
-                        className="absolute right-2 top-0.5 cursor-pointer"
-                        onClick={copyToClipboard}
-                    >
+                <div className="flex justify-between mb-4">
+                    <div className="text-[10px] text-blue-600 underline break-words">{link}</div>
+                    <div className="cursor-pointer"
+                        onClick={copyToClipboard}>
                         <Icon icon='ph:copy' className="text-gray-500" width="24" height="24" />
-                    </span>
+                    </div>
+
                 </div>
 
                 <button

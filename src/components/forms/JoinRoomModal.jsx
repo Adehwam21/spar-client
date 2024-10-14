@@ -30,8 +30,9 @@ function JoinRoomModal({ isOpen, onClose }) {
                 }
 
                 console.log(`New Room State`, newGameState);
+                const updatedRoomData = newGameState.roomInfo.roomData
 
-                dispatch(setGameState(newGameState));
+                dispatch(setGameState(updatedRoomData));
                 let mode = newGameState.roomInfo.roomData.mode;
 
                 if (mode === '2') {
