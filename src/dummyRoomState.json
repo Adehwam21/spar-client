@@ -16,7 +16,7 @@
     "players": [
       {
         "playerIndex": 0,
-        "playersInfo": {
+        "playerInfo": {
           "id": "p1",
           "username": "player1",
           "email": "player1@example.com",

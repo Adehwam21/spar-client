@@ -1,27 +1,26 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import GameBoardThree from './GameBoardThree';
-import PlayerCardRack from '../PlayerCardRack';
-import PlayerCommandBar from '../PlayerCommandBar';
-import RoomHeader from '../RoomHeader';
+import PlayerCardRack from '../components/PlayerCardRack';
+import RoomLinkModal from '../../forms/RoomLinkModal';
+import RoomHeader from '../components/RoomHeader';
 
 
 function ThreePlayerRoom() {
     // Access gameState from context
-    const { gameState } = useGameState();
+    const gameState = useSelector((state) => state.game.gameState); // Assumes you have a 'game' slice in your Redux store
 
-    if (!gameState || !gameState.gameState) {
-        return <div>Loading...</div>;
-    }
-
-    const { gameState: gameData } = gameState; // Extract nested gameState
-    const { players, turnSetter, previousRoundWinner, roundStatus } = gameData;
+    const { players = [], turnSetter, previousRoundWinner } = gameState || {};
+    const [player1, player2, player3,] = players;
 
     // Safety check for players length
-    if (players.length < 3) {
-        return <div>Not enough players available...</div>;
+    if (!gameState || players.length < 4) {
+        return (
+            <div>
+                <RoomLinkModal roomId={"7893"} link={"http://eude.e3940"} isOpen={true} />
+            </div>
+        );
     }
-
-    const [player1, player2, player3] = players;
 
     return (
         <div className='h-screen'>

@@ -6,7 +6,7 @@ import { Icon } from '@iconify/react';
 
 function Login() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-  const navigate = useNavigate(); // Use navigate for redirection
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: '',
@@ -33,18 +33,20 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await axios.post(API_BASE_URL + 'auth/login', { username, password });
+      const response = await axios.post(`${API_BASE_URL}auth/login`, { username, password });
 
       if (response.data.error) {
         toast.error(response.data.error.message);
       } else {
-        toast.success('Login Successful.');
-
-        const { token } = response.data.success; // Assume response contains token and user details
+        const { token } = response.data.success;
 
         // Store the token and user details in localStorage/sessionStorage
         localStorage.setItem('token', token);
         localStorage.setItem('username', username);
+
+        // Create the Socket session for the client.
+
+        toast.success('Login Successful.');
 
         // Redirect to dashboard or lobby after a second
         setTimeout(() => {
