@@ -1,41 +1,55 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { socket } from '../socket';
+import { useDispatch } from 'react-redux';
+import { setGameState } from '../redux/slices/gameSlice';
 
 // Context
 const SocketContext = createContext(socket);
 
+// Hook
 export const useSocket = () => useContext(SocketContext);
 
+// Context Provider
 export const SocketProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const dispatch = useDispatch();
 
+    // Memoize token and username to ensure stable values
+    const token = useMemo(() => localStorage.getItem('token'), []);
+    const username = useMemo(() => localStorage.getItem('username'), []);
+
+    // Setup socket connection
     useEffect(() => {
-        const token = localStorage.getItem('token');
-
         if (token) {
-            // Set token dynamically before connecting the socket
-            socket.auth = { token: token };
+            socket.auth = { token };
             socket.connect();
-            setIsLoggedIn(true); // Set logged in state
-        } else {
-            console.error('No token found. Unable to connect to socket.');
+
+            socket.on('connect', () => {
+                console.log('Successfully connected to the socket with ID:', socket.id);
+                socket.emit("identify", { username });
+                setIsLoggedIn(true);
+            });
+
+            socket.on('connect_error', (err) => {
+                console.error('Socket connection error:', err);
+            });
+
+            socket.on('reconnect_attempt', () => {
+                console.log('Attempting to reconnect to the socket...');
+            });
+
+            socket.on('disconnect', (reason) => {
+                console.warn('Disconnected from the socket:', reason);
+            });
         }
 
-        // Handle connection events
-        socket.on('connect_error', (err) => {
-            console.error('Socket connection error:', err);
-        });
-
-        socket.on('connect', () => {
-            console.log('Successfully connected to the socket');
-        });
-
         return () => {
-            socket.off('connect_error');
             socket.off('connect');
-            socket.disconnect();
+            socket.off('connect_error');
+            socket.off('reconnect_attempt');
+            socket.off('disconnect');
         };
-    }, [isLoggedIn]);
+    }, [token, username]);
 
     return (
         <SocketContext.Provider value={socket}>

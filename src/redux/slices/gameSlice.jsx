@@ -1,6 +1,5 @@
 // slices/gameSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-import dummyGameState from '../../dummyRoomState.json'; // Import dummy data
 
 // const initialState = dummyGameState; // Set initial state to dummy data
 const initialState = {
@@ -53,7 +52,6 @@ const initialState = {
             playedCards: [],
         },
     }
-
 }
 
 const gameSlice = createSlice({
@@ -74,31 +72,9 @@ const gameSlice = createSlice({
         },
         updateTurn: (state, action) => {
             state.roomState.gameState.moveNumber = action.payload.moveNumber;
-            state.roomState.gameState.moveWinner = action.payload.moveWinner;
         },
     },
 });
-
-
-// const gameSlice = createSlice({
-//     name: 'game',
-//     initialState,
-//     reducers: {
-//         setGameState: (state, action) => {
-//             state.roomState = action.payload;
-//         },
-//         joinRoom: (state, action) => {
-//             state.roomState = action.payload
-//         },
-//         playCard: (state, action) => {
-//             // Update the state based on the card played
-//             state.roomState = action.payload;
-//         },
-//         updateTurn: (state, action) => {
-//             state.roomState = action.payload;
-//         },
-//     },
-// });
 
 export const { setGameState, joinRoom, playCard, updateTurn } = gameSlice.actions;
 export default gameSlice.reducer;

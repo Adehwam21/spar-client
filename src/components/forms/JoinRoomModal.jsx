@@ -24,7 +24,7 @@ function JoinRoomModal({ isOpen, onClose }) {
     useEffect(() => {
         if (socket) {
             // Listen for game state updates from the server
-            socket.on('gameStateUpdate', (newGameState) => {
+            socket.on('game-state-update', (newGameState) => {
                 if (!newGameState) {
                     return;
                 }
@@ -44,10 +44,11 @@ function JoinRoomModal({ isOpen, onClose }) {
                 }
             });
 
-            // Clean up the listener when the component is unmounted
             return () => {
-                socket.off('gameStateUpdate');
-            };
+                if (socket) {
+                    socket.off('game-state-update');
+                }
+            }
         }
     }, [dispatch, navigate, roomNum, socket]);
 

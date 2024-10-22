@@ -27,25 +27,25 @@ function CreateRoomModal({ isOpen, onClose }) {
                 roomType
             });
 
-            const roomID = response.data.success.roomInfo.roomData.roomNum;
+            const roomNum = response.data.success.roomInfo.roomData.roomNum;
             const roomToken = response.data.success.roomInfo.cookie;
             const message = response.data.success.message;
 
             localStorage.setItem("roomToken", roomToken);
-            localStorage.setItem("roomNum", roomID);
+            localStorage.setItem("roomNum", roomNum);
             toast.success(message);
 
             if (socket) {
-                socket.emit('create-room', roomID);
+                socket.emit('create-room', { roomNum });
             }
 
             // Navigate to the room page based on the mode
             if (mode === '2') {
-                setTimeout(() => navigate(`/room/2player/${roomID}`), 1000);
+                setTimeout(() => navigate(`/room/2player/${roomNum}`), 1000);
             } else if (mode === '3') {
-                setTimeout(() => navigate(`/room/3player/${roomID}`), 1000);
+                setTimeout(() => navigate(`/room/3player/${roomNum}`), 1000);
             } else if (mode === '4') {
-                setTimeout(() => navigate(`/room/4player/${roomID}`), 1000);
+                setTimeout(() => navigate(`/room/4player/${roomNum}`), 1000);
             }
 
         } catch (error) {

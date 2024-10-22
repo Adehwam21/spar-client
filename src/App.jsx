@@ -1,12 +1,16 @@
 import './App.css';
 import { Toaster } from 'react-hot-toast';
+import { SocketProvider } from './contexts/socketContext';
 import { Outlet } from 'react-router-dom';
+
 
 function App() {
   return (
     <>
       <Toaster />
-      <Outlet />
+      <SocketProvider>
+        <Outlet />
+      </SocketProvider>
     </>
   );
 }

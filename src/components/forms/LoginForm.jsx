@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 
-
 function Login() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
@@ -39,11 +38,13 @@ function Login() {
       if (response.data.error) {
         toast.error(response.data.error.message);
       } else {
-        const { token } = response.data.success; // Assume response contains token and user details
+        const { token } = response.data.success;
 
         // Store the token and user details in localStorage/sessionStorage
         localStorage.setItem('token', token);
         localStorage.setItem('username', username);
+
+        // Create the Socket session for the client.
 
         toast.success('Login Successful.');
 
