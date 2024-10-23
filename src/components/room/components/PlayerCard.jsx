@@ -2,7 +2,7 @@ import React from 'react';
 import CardPile from './CardPile'; // Ensure CardPile is imported correctly
 import ScoreCard from './ScoreCard';
 
-function PlayerCard({ player }) {
+function PlayerCard({ player, color }) {
     const { playerInfo, points, hand } = player;
 
     return (
@@ -11,7 +11,7 @@ function PlayerCard({ player }) {
                 <img
                     src={playerInfo.profilePicture}
                     alt={`${playerInfo.username}'s avatar`}
-                    className="w-10 h-10 rounded-full border-4 border-yellow-400"
+                    className={`w-10 h-10 rounded-full border-4 border-${color}-400`}
                 />
                 <div className="text-center">
                     <h2 className="text-lg font-semibold">{playerInfo.username}</h2>

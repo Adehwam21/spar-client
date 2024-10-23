@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setGameState } from '../../../redux/slices/gameSlice';
+import { useSocket } from '../../../contexts/socketContext';
+import { groupPlayers } from '../../../services/roomService';
 import GameBoardTwo from './GameBoardTwo';
 import PlayerCardRack from '../components/PlayerCardRack';
 import RoomHeader from '../components/RoomHeader';
 import RoomLinkModal from '../../forms/RoomLinkModal';
-import { setGameState } from '../../../redux/slices/gameSlice';
-import { useSocket } from '../../../contexts/socketContext';
+
 
 function TwoPlayerRoom() {
     const dispatch = useDispatch();
@@ -28,7 +30,7 @@ function TwoPlayerRoom() {
 
     const { id, vacant, roomNum, gameState } = roomData;
     const { players, moveWinner, leadingCard } = gameState;
-    const [currentPlayer, opponent] = players;
+
 
     // Show RoomLinkModal when the room is vacant
     if (vacant) {
@@ -36,6 +38,17 @@ function TwoPlayerRoom() {
         return (
             <RoomLinkModal roomId={roomNum} link={`${import.meta.env.VITE_SERVER_URL}/game/room/2player/${roomNum}`} isOpen={true} />
         );
+    }
+
+    const playerList = roomData.players
+    let playerGroup = null;
+
+    if (playerList && playerList.length > 0) {
+        playerGroup = groupPlayers(playerList);
+    }
+
+    if (!playerGroup) {
+        console.log('Could not group players');
     }
 
     // Once room is full, show the game board
@@ -47,10 +60,10 @@ function TwoPlayerRoom() {
                 onLeaveRoom={() => console.log('Leaving room...')}
             />
 
-            <GameBoardTwo players={players} />
+            <GameBoardTwo players={players} playerGroup={playerGroup} />
 
             <div className='flex justify-center items-center bg-green-700'>
-                <PlayerCardRack hand={currentPlayer?.hand} />
+                <PlayerCardRack hand={players[playerGroup.main].hand} />
             </div>
         </div>
     );
