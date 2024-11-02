@@ -1,6 +1,15 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function RoomHeader({ eventMessage, previousRoundWinner, onLeaveRoom }) {
+    const navigate = useNavigate()
+
+    function handleLeaveRoom() {
+        localStorage.removeItem('roomToken');
+        localStorage.removeItem('roomNum')
+        navigate('/lobby')
+    }
+
     return (
         <div className="flex flex-row md:flex-row justify-between items-center p-3 bg-green-800 text-white shadow-md space-y-3 md:space-y-0">
             {/* Event Displayer */}
@@ -16,7 +25,7 @@ function RoomHeader({ eventMessage, previousRoundWinner, onLeaveRoom }) {
             {/* Leave Room Button */}
             <div>
                 <button
-                    onClick={onLeaveRoom}
+                    onClick={handleLeaveRoom}
                     className="bg-red-600 hover:bg-red-700 text-xs md:text-sm px-3 md:px-4 py-1.5 md:py-2 rounded-lg"
                 >
                     Leave Room

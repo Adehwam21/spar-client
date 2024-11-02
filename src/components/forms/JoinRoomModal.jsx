@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setGameState } from '../../redux/slices/gameSlice';
 import { useSocket } from '../../contexts/socketContext';
+import toast from 'react-hot-toast';
 
 function JoinRoomModal({ isOpen, onClose }) {
     const [roomNum, setRoomNum] = useState('');
@@ -34,6 +35,10 @@ function JoinRoomModal({ isOpen, onClose }) {
 
                 dispatch(setGameState(updatedRoomData));
                 let mode = newGameState.roomInfo.roomData.mode;
+                let roomToken = newGameState.roomInfo.cookie
+
+                localStorage.setItem('roomNum', roomNum);
+                localStorage.setItem('roomToken', roomToken);
 
                 if (mode === '2') {
                     setTimeout(() => navigate(`/room/2player/${roomNum}`), 1000);

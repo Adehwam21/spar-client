@@ -8,7 +8,7 @@ function CardPile({ cards }) {
                 <div
                     key={index}
                     className="absolute transition-all"
-                    style={{ left: `${index * 2.5}rem` }} // Smaller overlap on mobile
+                    style={{ left: `${index * 2.5}rem` }}
                 >
                     <Card card={card} isLeading={false} />
                 </div>

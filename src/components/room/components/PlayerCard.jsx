@@ -1,9 +1,9 @@
 import React from 'react';
-import CardPile from './CardPile'; // Ensure CardPile is imported correctly
+import CardPile from './CardPile';
 import ScoreCard from './ScoreCard';
 
 function PlayerCard({ player, color }) {
-    const { playerInfo, points, hand } = player;
+    const { playerInfo, points, bids } = player;
 
     return (
         <div className="flex justify-center flex-row items-center p-1 text-white space-x-3">
@@ -11,7 +11,7 @@ function PlayerCard({ player, color }) {
                 <img
                     src={playerInfo.profilePicture}
                     alt={`${playerInfo.username}'s avatar`}
-                    className={`w-10 h-10 rounded-full border-4 border-${color}-400`}
+                    className={`w-10 h-10 rounded-full border-4 border-${color}`}
                 />
                 <div className="text-center">
                     <h2 className="text-lg font-semibold">{playerInfo.username}</h2>
@@ -21,7 +21,7 @@ function PlayerCard({ player, color }) {
 
             <div className="flex-grow">
                 {/* Card pile of the player */}
-                <CardPile cards={hand} />
+                <CardPile cards={bids} />
             </div>
 
             {/* <div className="flex justify-center items-center flex-grow">

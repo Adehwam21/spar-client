@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import PlayableCards from './PlayableCard';
-import PlayerCommandBar from './PlayerCommandBar';
+import VsAiPlayerCommandBar from './VsAiCommandBar';
 
-function PlayerCardRack({ hand }) {
+function VsAiPlayerCardRack({ hand }) {
     const [selectedCard, setSelectedCard] = useState(null);
 
     const handleCardClick = (card) => {
@@ -27,10 +27,10 @@ function PlayerCardRack({ hand }) {
 
             {/* Player command bar section */}
             <div className="w-1/4 md:w-1/6">
-                <PlayerCommandBar selectedCard={selectedCard} />
+                <VsAiPlayerCommandBar selectedCard={selectedCard} />
             </div>
         </div>
     );
 }
 
-export default PlayerCardRack;
+export default VsAiPlayerCardRack;

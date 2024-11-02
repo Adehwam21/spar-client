@@ -29,6 +29,7 @@ const initialState = {
                         friends: [],
                     },
                     hand: [],
+                    bids: [],
                     points: 0,
                 },
                 {
@@ -41,6 +42,7 @@ const initialState = {
                         friends: [],
                     },
                     hand: [],
+                    bids: [],
                     points: 0,
                 },
             ],
@@ -48,6 +50,7 @@ const initialState = {
             moveNumber: 0,
             moveWinner: null,
             leadingCard: null,
+            currentPlayerIndex: 0,
             gameStatus: "waiting",
             playedCards: [],
         },

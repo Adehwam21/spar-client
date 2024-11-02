@@ -1,3 +1,5 @@
+import { playCard } from "../redux/slices/gameSlice";
+
 export function groupPlayers(players) {
     const currentPlayer = localStorage.getItem('username');
     const playerGroup = { main: -1, opponents: [] };
@@ -14,4 +16,18 @@ export function groupPlayers(players) {
         .filter(index => index !== mainPlayerIndex);
         
     return playerGroup;
+}
+
+export function groupPlayedCards(players, playedCards) {
+    const bids = {};
+
+    playedCards.forEach((playedCard) => {
+        if (!(playedCard.username in bids)) {
+            bids[playedCard.username] = [playedCard.card];
+        } else {
+            bids[playedCard.username].push(playedCard.card);
+        }
+    });
+
+    return bids;
 }
