@@ -7,6 +7,7 @@ import GameBoardTwo from './GameBoardTwo';
 import PlayerCardRack from '../components/PlayerCardRack';
 import RoomHeader from '../components/RoomHeader';
 import RoomLinkModal from '../../forms/RoomLinkModal';
+import { current } from '@reduxjs/toolkit';
 
 
 function TwoPlayerRoom() {
@@ -42,6 +43,20 @@ function TwoPlayerRoom() {
 
     const playerList = roomData.players
     let playerGroup = null;
+    const currentUser = localStorage.getItem('username')
+
+    const playerTurn = () => {
+        let turn = ""
+        if (currentUser) {
+            if ((leadingCard?.username || playerList[0]) === currentUser) {
+                turn = leadingCard?.username || playerList[0]
+            } else {
+                turn = "Waiting for opponent."
+            }
+        }
+        return turn
+
+    }
 
     if (playerList && playerList.length > 0) {
         playerGroup = groupPlayers(playerList);
@@ -55,7 +70,7 @@ function TwoPlayerRoom() {
     return (
         <div className='h-screen overflow-hidden'>
             <RoomHeader
-                eventMessage={`Leader: ${leadingCard?.username || playerList[0]} | Move: ${moveNumber}`}
+                eventMessage={`Leader: ${playerTurn()} | Move: ${moveNumber}`}
                 previousRoundWinner={moveWinner ? `Previous winner: Player ${moveWinner}` : 'No winner yet'}
                 onLeaveRoom={() => console.log('Leaving room...')}
             />
