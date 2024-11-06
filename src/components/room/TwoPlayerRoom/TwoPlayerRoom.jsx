@@ -30,7 +30,7 @@ function TwoPlayerRoom() {
 
 
     const { id, vacant, roomNum, gameState } = roomData;
-    const { players, moveWinner, leadingCard, moveNumber } = gameState;
+    const { players, previousRoundWinner, currentPlayerIndex, leadingCard, moveNumber } = gameState;
 
 
     // Show RoomLinkModal when the room is vacant
@@ -48,14 +48,13 @@ function TwoPlayerRoom() {
     const playerTurn = () => {
         let turn = ""
         if (currentUser) {
-            if ((leadingCard?.username || playerList[0]) === currentUser) {
-                turn = leadingCard?.username || playerList[0]
+            if ((playerList[currentPlayerIndex]) === currentUser) {
+                turn = "Your turn"
             } else {
                 turn = "Waiting for opponent."
             }
         }
         return turn
-
     }
 
     if (playerList && playerList.length > 0) {
@@ -70,8 +69,8 @@ function TwoPlayerRoom() {
     return (
         <div className='h-screen overflow-hidden'>
             <RoomHeader
-                eventMessage={`Leader: ${playerTurn()} | Move: ${moveNumber}`}
-                previousRoundWinner={moveWinner ? `Previous winner: Player ${moveWinner}` : 'No winner yet'}
+                eventMessage={`${playerTurn()} | Move: ${moveNumber}`}
+                previousRoundWinner={previousRoundWinner ? `${previousRoundWinner}` : 'No winner yet'}
                 onLeaveRoom={() => console.log('Leaving room...')}
             />
 
