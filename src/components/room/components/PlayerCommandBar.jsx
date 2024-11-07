@@ -41,6 +41,18 @@ function PlayerCommandBar({ selectedCard }) {
                 dispatch(setGameState(updatedRoomData));
             });
 
+            // Listen for game state updates from the server
+            socket.on('new-round-update', (newGameState) => {
+                if (!newGameState) {
+                    return;
+                }
+
+                console.log(`New Room State`, newGameState);
+                const updatedRoomData = newGameState.updatedRoom
+
+                dispatch(setGameState(updatedRoomData));
+            });
+
             socket.on('error', (error) => {
                 toast.error(error.message);
             })
