@@ -47,7 +47,18 @@ function PlayerCommandBar({ selectedCard }) {
                     return;
                 }
 
-                console.log(`New Room State`, newGameState);
+                console.log(`New Round State`, newGameState);
+                const updatedRoomData = newGameState.updatedRoom
+
+                dispatch(setGameState(updatedRoomData));
+            });
+
+            socket.on('end-game-update', (newGameState) => {
+                if (!newGameState) {
+                    return;
+                }
+
+                console.log(`End Game State`, newGameState);
                 const updatedRoomData = newGameState.updatedRoom
 
                 dispatch(setGameState(updatedRoomData));
