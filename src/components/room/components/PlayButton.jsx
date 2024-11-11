@@ -6,7 +6,7 @@ function PlayButton({ onClick }) {
         <Button
             label="Play"
             onClick={onClick}
-            className="bg-gold text-white text-2xl font-bold hover:bg-yellow-600 w-48 h-12"
+            className="bg-gold text-white text-sm font-bold hover:bg-yellow-600 w-24 h-10"
         />
     );
 }
