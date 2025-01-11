@@ -7,6 +7,7 @@ import VsAiRoom from '../components/room/SinglePlayerRoom/VsAiRoom';
 import TwoPlayerRoom from '../components/room/TwoPlayerRoom/TwoPlayerRoom';
 import ThreePlayerRoom from '../components/room/ThreePlayerRoom/ThreePlayerRoom';
 import FourPlayerRoom from '../components/room/FourPlayerRoom/FourPlayerRoom';
+import Learn from '../pages/LearnPage/Learn';
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -20,6 +21,7 @@ export const router = createBrowserRouter(
                     </ProtectedRoute>
                 }
             />
+            <Route path="/how-to-play" element={<Learn />} />
             {/* Room Routes */}
             <Route path="/room/play-ai/:roomId" element={<VsAiRoom />} />
             <Route path="/room/2player/:roomId" element={<TwoPlayerRoom />} />

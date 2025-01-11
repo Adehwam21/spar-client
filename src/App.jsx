@@ -16,3 +16,7 @@ function App() {
 }
 
 export default App;
+
+// The index of success for a believer:
+// You are not successful if your don't have success
+// You are not successful if your health and physical well being is faulty

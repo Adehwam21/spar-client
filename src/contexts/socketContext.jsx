@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { socket } from '../socket';
 import { useDispatch } from 'react-redux';
-import { setGameState } from '../redux/slices/gameSlice';
 
 // Context
 const SocketContext = createContext(socket);
@@ -12,7 +11,6 @@ export const useSocket = () => useContext(SocketContext);
 // Context Provider
 export const SocketProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const dispatch = useDispatch();
 
     // Memoize token and username to ensure stable values
     const token = useMemo(() => localStorage.getItem('token'), []);

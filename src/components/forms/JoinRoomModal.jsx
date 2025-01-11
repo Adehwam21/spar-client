@@ -39,6 +39,9 @@ function JoinRoomModal({ isOpen, onClose }) {
 
                 localStorage.setItem('roomNum', roomNum);
                 localStorage.setItem('roomToken', roomToken);
+                socket.on('success', (message) => {
+                    toast.success(message)
+                })
 
                 if (mode === '2') {
                     setTimeout(() => navigate(`/room/2player/${roomNum}`), 1000);
