@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import PlayButton from './PlayButton';
-import ShuffleButton from './ShuffleButton';
 import { useSocket } from '../../../contexts/socketContext'
 import { useDispatch } from 'react-redux';
 import { setGameState } from '../../../redux/slices/gameSlice';
@@ -84,7 +83,6 @@ function PlayerCommandBar({ selectedCard }) {
     return (
         <div className="flex flex-col justify-center items-center gap-2 p-2 bg-green-800 rounded-r h-full">
             <PlayButton onClick={handlePlayClick} />
-            <ShuffleButton onClick={handleShuffleClick} />
         </div>
     );
 }

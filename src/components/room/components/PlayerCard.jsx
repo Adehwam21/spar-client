@@ -11,8 +11,10 @@ function PlayerCard({ player, color }) {
                 <img
                     src={playerInfo.profilePicture}
                     alt={`${playerInfo.username}'s avatar`}
-                    className={`w-10 h-10 rounded-full border-4 border-${color}`}
+                    className="w-10 h-10 rounded-full border-4"
+                    style={{ borderColor: color }}
                 />
+
                 <div className="text-center">
                     <h2 className="text-lg font-semibold">{playerInfo.username}</h2>
                     <p className="text-sm font-bold text-white">{points}</p>

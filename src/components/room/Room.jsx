@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setGameState } from '../../../redux/slices/gameSlice';
-import { useSocket } from '../../../contexts/socketContext';
-import { groupPlayers } from '../../../services/roomService';
-import GameBoardTwo from './GameBoardTwo';
-import PlayerCardRack from '../components/PlayerCardRack';
-import RoomHeader from '../components/RoomHeader';
-import RoomLinkModal from '../../forms/RoomLinkModal';
-import FinalScoreModal from '../components/FinalScoreModal';
+import { setGameState } from '../../redux/slices/gameSlice';
+import { useSocket } from '../../contexts/socketContext';
+import { groupPlayers } from '../../services/roomService';
+import GameBoard from './components/GameBoard';
+import PlayerCardRack from './components/PlayerCardRack';
+import RoomHeader from './components/RoomHeader';
+import RoomLinkModal from '../forms/RoomLinkModal';
+import FinalScoreModal from './components/FinalScoreModal';
 
-function TwoPlayerRoom() {
+function Room() {
     const [isFinalScoreModalOpen, setIsFinalScoreModalOpen] = useState(false);
     const dispatch = useDispatch();
     const roomData = useSelector((state) => state.game.roomState);
@@ -80,7 +80,7 @@ function TwoPlayerRoom() {
                 onLeaveRoom={() => console.log('Leaving room...')}
             />
 
-            <GameBoardTwo players={players} playerGroup={playerGroup} />
+            <GameBoard players={players} playerGroup={playerGroup} />
 
             <div className='flex justify-center items-center bg-green-700'>
                 {players && playerGroup && (
@@ -100,4 +100,4 @@ function TwoPlayerRoom() {
     );
 }
 
-export default TwoPlayerRoom;
+export default Room;

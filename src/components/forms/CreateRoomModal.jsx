@@ -39,14 +39,8 @@ function CreateRoomModal({ isOpen, onClose }) {
                 socket.emit('create-room', { roomNum });
             }
 
-            // Navigate to the room page based on the mode
-            if (mode === '2') {
-                setTimeout(() => navigate(`/room/2player/${roomNum}`), 1000);
-            } else if (mode === '3') {
-                setTimeout(() => navigate(`/room/3player/${roomNum}`), 1000);
-            } else if (mode === '4') {
-                setTimeout(() => navigate(`/room/4player/${roomNum}`), 1000);
-            }
+            // Navigate to the room
+            setTimeout(() => navigate(`/room/${mode}/${roomNum}`), 1000);
 
         } catch (error) {
             const message = error.response?.data?.error?.message || 'Room creation failed.';
