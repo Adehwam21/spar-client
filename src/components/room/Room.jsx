@@ -8,6 +8,7 @@ import PlayerCardRack from './components/PlayerCardRack';
 import RoomHeader from './components/RoomHeader';
 import RoomLinkModal from '../forms/RoomLinkModal';
 import FinalScoreModal from './components/FinalScoreModal';
+import toast from 'react-hot-toast';
 
 function Room() {
     const [isFinalScoreModalOpen, setIsFinalScoreModalOpen] = useState(false);
@@ -15,15 +16,15 @@ function Room() {
     const roomData = useSelector((state) => state.game.roomState);
     const socket = useSocket(); // Access the socket from context
 
-    const { id, vacant, roomNum, gameState, winner } = roomData;
-    const { players, previousRoundWinner, currentPlayerIndex, moveNumber } = gameState || {};
+    const { id, vacant, roomNum, gameState, winner } = roomData || {};
+    const { players, previousRoundWinner, currentPlayerIndex, moveNumber, leadingCard } = gameState || {};
     const currentUser = localStorage.getItem('username');
 
     // Hook for listening to socket events
     useEffect(() => {
         socket.on('game-state-update', (newGameState) => {
             if (newGameState) {
-                console.log('Game state update received in TwoPlayerRoom:', newGameState);
+                console.log('Game state update received in Room:', newGameState);
                 dispatch(setGameState(newGameState.roomInfo.roomData));
             }
         });
@@ -32,7 +33,6 @@ function Room() {
             socket.off('game-state-update');
         };
     }, [socket, dispatch]);
-
 
     // Open the modal when the game ends
     useEffect(() => {
@@ -53,7 +53,8 @@ function Room() {
         );
     }
 
-    const playerList = roomData.players;
+    
+    const playerList = roomData?.players || [];
     const playerTurnMessage = currentUser
         ? (playerList[currentPlayerIndex] === currentUser ? "Your turn" : "Waiting for opponent.")
         : "";
@@ -62,29 +63,34 @@ function Room() {
         ? (winner === currentUser ? "You win!" : `Game over! ${winner} wins.`)
         : "";
 
-    const playerGroup = playerList && playerList.length > 0 ? groupPlayers(playerList) : null;
+    const playerGroup = playerList.length > 0 ? groupPlayers(playerList) : { main: 0, opponents: [] };
 
     // Safely extract scores and sort them in descending order
     const scores = gameState
         ? gameState.players.map(player => ({
-            name: player.playerInfo.username,
-            score: player.points,
+            name: player?.playerInfo?.username || "Unknown", // Handle missing playerInfo or username
+            score: player?.points || 0, // Default points to 0 if missing
         })).sort((a, b) => b.score - a.score)
         : [];
 
     return (
-        <div className='h-screen overflow-hidden'>
+        <div className="h-full overflow-y-hidden mb-0">
             <RoomHeader
-                eventMessage={winner ? winnerMessage : `${playerTurnMessage} | Move: ${moveNumber}`}
+                eventMessage={winner ? winnerMessage : `${playerTurnMessage} | Move: ${moveNumber || 0}`}
                 previousRoundWinner={previousRoundWinner || 'No winner yet'}
                 onLeaveRoom={() => console.log('Leaving room...')}
             />
 
-            <GameBoard players={players} playerGroup={playerGroup} />
+            <GameBoard
+                players={players || []} // Ensure players is always an array
+                playerGroup={playerGroup} // Provide a fallback for playerGroup
+                playerTurn={playerList[currentPlayerIndex] || null} // Handle missing currentPlayerIndex
+                leadingBidder={leadingCard?.username || ""} // Use optional chaining for leadingCard.username
+            />
 
-            <div className='flex justify-center items-center bg-green-700'>
+            <div className="flex h-44 justify-center items-center bg-green-700">
                 {players && playerGroup && (
-                    <PlayerCardRack hand={players[playerGroup.main].hand} />
+                    <PlayerCardRack hand={players[playerGroup.main]?.hand || []} />
                 )}
             </div>
 

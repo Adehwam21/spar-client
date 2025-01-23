@@ -65,6 +65,7 @@ function PlayerCommandBar({ selectedCard }) {
 
             socket.on('error', (error) => {
                 toast.error(error.message);
+                return;
             })
 
             return () => {

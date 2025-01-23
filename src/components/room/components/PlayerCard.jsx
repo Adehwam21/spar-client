@@ -2,8 +2,9 @@ import React from 'react';
 import CardPile from './CardPile';
 import ScoreCard from './ScoreCard';
 
-function PlayerCard({ player, color }) {
+function PlayerCard({ player, color, leadingBidder }) {
     const { playerInfo, points, bids } = player;
+    const isLeader = playerInfo.username === leadingBidder;
 
     return (
         <div className="flex justify-center flex-row items-center p-1 text-white space-x-3">
@@ -23,7 +24,7 @@ function PlayerCard({ player, color }) {
 
             <div className="flex-grow">
                 {/* Card pile of the player */}
-                <CardPile cards={bids} />
+                <CardPile cards={bids} isLeaderPile={isLeader} />
             </div>
 
             {/* <div className="flex justify-center items-center flex-grow">
