@@ -21,33 +21,30 @@ export const SocketProvider = ({ children }) => {
         if (token) {
             socket.auth = { token };
             socket.connect();
-
-            socket.on('connect', () => {
-                console.log('Successfully connected to the socket with ID:', socket.id);
-                socket.emit("identify", { username });
+    
+            socket.on("connect", () => {
+                // Emit a custom "connect" event to the server
+                socket.emit("connect-user", { username });
                 setIsLoggedIn(true);
+                console.log("Successfully connected to the socket:", socket.id);
             });
-
-            socket.on('connect_error', (err) => {
-                console.error('Socket connection error:', err);
+    
+            socket.on("connect_error", (err) => {
+                console.error("Socket connection error:", err);
             });
-
-            socket.on('reconnect_attempt', () => {
-                console.log('Attempting to reconnect to the socket...');
+    
+            socket.on("disconnect", (reason) => {
+                console.warn("Disconnected from the socket:", reason);
             });
-
-            socket.on('disconnect', (reason) => {
-                console.warn('Disconnected from the socket:', reason);
-            });
+    
+            return () => {
+                socket.off("connect");
+                socket.off("connect_error");
+                socket.off("disconnect");
+            };
         }
-
-        return () => {
-            socket.off('connect');
-            socket.off('connect_error');
-            socket.off('reconnect_attempt');
-            socket.off('disconnect');
-        };
     }, [token, username]);
+    
 
     return (
         <SocketContext.Provider value={socket}>

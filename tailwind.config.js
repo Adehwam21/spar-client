@@ -14,7 +14,10 @@ module.exports = {
                 'gray-overlay': 'rgba(0, 0, 0, 0.8)', // Example for overlay
             },
             height: {
-                '100': "33rem"
+                '100': "33rem",
+                '105': "40rem",
+                '110': "45rem",
+                '115': "50rem"
             },
             transitionProperty: {
                 'transform': 'transform',

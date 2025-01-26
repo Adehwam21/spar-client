@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSocket } from '../../../contexts/socketContext';
 import toast from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { reset } from '../../../redux/slices/gameSlice';
 
-function RoomHeader({ eventMessage, previousRoundWinner, onLeaveRoom }) {
+function RoomHeader({ eventMessage, previousRoundWinner}) {
     const socket = useSocket();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
 
     function handleLeaveRoom() {
@@ -14,15 +17,18 @@ function RoomHeader({ eventMessage, previousRoundWinner, onLeaveRoom }) {
         try {
             if (socket && roomNum && username) {
                 socket.emit('leave-room', { username, roomNum });
+
+                // Clear the room data from the Redux store and local storage
+                dispatch(reset("reset"));
+                localStorage.removeItem('roomToken');
+                localStorage.removeItem('roomNum');
+
+                // Navigate to the lobby
+                navigate('/lobby');
             }
         } catch (error) {
             console.error('Error emitting leave-room:', error);
         }
-
-        // Remove room information from local storage and navigate to the lobby
-        localStorage.removeItem('roomToken');
-        localStorage.removeItem('roomNum');
-        navigate('/lobby');
     }
 
     useEffect(() => {

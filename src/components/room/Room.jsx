@@ -74,7 +74,7 @@ function Room() {
         : [];
 
     return (
-        <div className="h-full overflow-y-hidden mb-0">
+        <div className="h-full mb-0">
             <RoomHeader
                 eventMessage={winner ? winnerMessage : `${playerTurnMessage} | Move: ${moveNumber || 0}`}
                 previousRoundWinner={previousRoundWinner || 'No winner yet'}
@@ -88,7 +88,7 @@ function Room() {
                 leadingBidder={leadingCard?.username || ""} // Use optional chaining for leadingCard.username
             />
 
-            <div className="flex h-44 justify-center items-center bg-green-700">
+            <div className="flex h-auto justify-center items-center bg-green-700">
                 {players && playerGroup && (
                     <PlayerCardRack hand={players[playerGroup.main]?.hand || []} />
                 )}

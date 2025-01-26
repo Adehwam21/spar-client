@@ -76,8 +76,11 @@ const gameSlice = createSlice({
         updateTurn: (state, action) => {
             state.roomState.gameState.moveNumber = action.payload.moveNumber;
         },
+        reset: (state, action) => {
+            state.roomState = initialState.roomState;
+        }
     },
 });
 
-export const { setGameState, joinRoom, playCard, updateTurn } = gameSlice.actions;
+export const { setGameState, joinRoom, playCard, updateTurn, reset } = gameSlice.actions;
 export default gameSlice.reducer;

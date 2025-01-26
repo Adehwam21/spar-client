@@ -4,7 +4,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import LandingPage from '../pages/LandingPage/LandingPage';
 import Dashboard from '../pages/Dashboard/Dashboard';
 import Room from '../components/room/Room';
-import Learn from '../pages/LearnPage/Learn';
+import LearnPage from '../pages/LearnPage/Learn';
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,7 +26,7 @@ export const router = createBrowserRouter(
                     </ProtectedRoute>
                 }
             />
-            <Route path="/how" element={<Learn />} />
+            <Route path="/how-to-play" element={<LearnPage />} />
         </Route>
     )
 );

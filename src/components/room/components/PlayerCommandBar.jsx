@@ -45,7 +45,7 @@ function PlayerCommandBar({ selectedCard }) {
                 if (!newGameState) {
                     return;
                 }
-
+                toast.loading('Starting new round...', { duration: 1000 });
                 console.log(`New Round State`, newGameState);
                 const updatedRoomData = newGameState.updatedRoom
 
@@ -57,6 +57,7 @@ function PlayerCommandBar({ selectedCard }) {
                     return;
                 }
 
+                toast.success('Game has ended!', { duration: 1000 });
                 console.log(`End Game State`, newGameState);
                 const updatedRoomData = newGameState.updatedRoom
 
@@ -77,12 +78,12 @@ function PlayerCommandBar({ selectedCard }) {
         }
     }, [dispatch, roomToken, socket]);
 
-    const handleShuffleClick = () => {
-        // Handle shuffle action
-    };
+    // const handleShuffleClick = () => {
+    //     // Handle shuffle action
+    // };
 
     return (
-        <div className="flex flex-col justify-center items-center gap-2 p-2 bg-green-800 rounded-r h-full">
+        <div className="flex flex-col justify-center p-4 items-center md:flex-row md:bg-green-800 md:rounded-lg h-auto">
             <PlayButton onClick={handlePlayClick} />
         </div>
     );

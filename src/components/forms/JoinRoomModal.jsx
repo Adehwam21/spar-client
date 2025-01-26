@@ -17,6 +17,7 @@ function JoinRoomModal({ isOpen, onClose }) {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
+        toast.loading('Joining Room...', { duration: 2000 });
         if (socket) {
             socket.emit('join-room', { roomNum, passcode, username });
         }
@@ -39,17 +40,10 @@ function JoinRoomModal({ isOpen, onClose }) {
 
                 localStorage.setItem('roomNum', roomNum);
                 localStorage.setItem('roomToken', roomToken);
-                socket.on('success', (message) => {
-                    toast.success(message)
-                })
+                toast.success("Enjoy", { duration: 2000 });
 
-                if (mode === '2') {
-                    setTimeout(() => navigate(`/room/2player/${roomNum}`), 1000);
-                } else if (mode === '3') {
-                    setTimeout(() => navigate(`/room/3player/${roomNum}`), 1000);
-                } else if (mode === '4') {
-                    setTimeout(() => navigate(`/room/4player/${roomNum}`), 1000);
-                }
+                // Navigate to the room
+                setTimeout(() => navigate(`/room/${mode}/${roomNum}`), 1000);
             });
 
             return () => {
@@ -57,6 +51,8 @@ function JoinRoomModal({ isOpen, onClose }) {
                     socket.off('game-state-update');
                 }
             }
+        } else {
+            toast.error('Cannot join room, invalid credentials', { duration: 2000 });
         }
     }, [dispatch, navigate, roomNum, socket]);
 

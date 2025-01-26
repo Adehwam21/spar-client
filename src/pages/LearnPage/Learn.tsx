@@ -1,13 +1,11 @@
 import React from "react";
 import Header from "../../components/Header/Header";
 
-function Learn() {
+function LearnPage() {
   return (
-    <div className="bg-[#f5f5f5] text-black min-h-screen p-4 sm:p-6">
-      <header className="flex-shrink-0">
+    <div className="bg-[#f5f5f5] flex flex-col space-y-10 text-black min-h-screen p-0">
         <Header />
-      </header>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-4xl p-4 mx-auto">
         <h1 className="text-green-600 text-3xl sm:text-4xl font-bold mb-6 text-center">
           How to Play Ghanaian Poker
         </h1>
@@ -18,8 +16,7 @@ function Learn() {
           </h2>
           <ul className="list-disc pl-4 sm:pl-6">
             <li>A deck of cards</li>
-            <li>2–4 players</li>
-            <li>A table</li>
+            <li>2 to 4 players</li>
           </ul>
         </section>
 
@@ -139,4 +136,4 @@ function Learn() {
   );
 }
 
-export default Learn;
+export default LearnPage;

@@ -1,6 +1,9 @@
-const crypto = require('crypto');
-const decryptionKey = Buffer.from(import.meta.env.ENCRYPTION_KEY, 'hex'); 
-const iv = Buffer.from(import.meta.env.ENCRYPTION_IV, 'hex');
+// import process from 'process';
+// import crypto from 'crypto';
+// import { Buffer } from 'buffer';
+
+// const decryptionKey = Buffer.from(import.meta.env.ENCRYPTION_KEY, 'hex'); 
+// const iv = Buffer.from(import.meta.env.ENCRYPTION_IV, 'hex');
 
 export function groupPlayers(players) {
     const currentPlayer = localStorage.getItem('username');
@@ -34,26 +37,26 @@ export function groupPlayedCards(players, playedCards) {
     return bids;
 }
 
-// Decrypt function for AES-256-CBC
-function decrypt(encryptedData) {
-    const decipher = crypto.createDecipheriv('aes-256-cbc', decryptionKey, iv);
-    let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
-    decrypted += decipher.final('utf8');
-    return JSON.parse(decrypted);
-}
+// // Decrypt function for AES-256-CBC
+// function decrypt(encryptedData) {
+//     const decipher = crypto.createDecipheriv('aes-256-cbc', decryptionKey, iv);
+//     let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+//     decrypted += decipher.final('utf8');
+//     return JSON.parse(decrypted);
+// }
 
-// Decrypt the game state (only the current player's hand)
-export function decryptGameState(gameState, currentPlayer) {
-    return gameState.players.map(player => {
-        if (player.playerInfo.username === currentPlayer) {
-            // Decrypt the hand of the current player
-            return {
-                ...player,
-                hand: decrypt(player.hand),
-            };
-        } else {
-            // Hide the hand of other players
-            return { ...player, hand: ["EAT SHIT YOU PEASANT!"] };
-        }
-    });
-}
+// // Decrypt the game state (only the current player's hand)
+// export function decryptGameState(gameState, currentPlayer) {
+//     return gameState.players.map(player => {
+//         if (player.playerInfo.username === currentPlayer) {
+//             // Decrypt the hand of the current player
+//             return {
+//                 ...player,
+//                 hand: decrypt(player.hand),
+//             };
+//         } else {
+//             // Hide the hand of other players
+//             return { ...player, hand: ["EAT SHIT YOU PEASANT!"] };
+//         }
+//     });
+// }

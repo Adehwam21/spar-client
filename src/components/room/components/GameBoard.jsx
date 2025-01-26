@@ -18,7 +18,7 @@ function GameBoard({ players, playerGroup, playerTurn, leadingBidder }) {
     };
 
     return (
-        <div className="relative bg-green-700 px-3 h-[27rem]">
+        <div className="relative bg-green-700 px-3 h-[25rem] md:h-[25rem] w-full">
             {/* For small screens (default), stack players vertically */}
             <div className="flex flex-col md:hidden justify-evenly items-center h-full">
                 {opponents.map((opponent, index) => (

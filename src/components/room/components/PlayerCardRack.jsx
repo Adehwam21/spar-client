@@ -11,9 +11,9 @@ function PlayerCardRack({ hand }) {
     };
 
     return (
-        <div className="flex justify-center h-32 items-center w-full  pb-4 bg-green-700">
+        <div className="flex flex-col justify-center h-full items-center md:flex-row md:space-x-5 w-full m-3 pb-4 md:m-4 bg-green-700">
             {/* Player cards section */}
-            <div className="flex justify-center items-center mx-2 h-32 mt-0  w-3/4 md:w-1/2 rounded-lg space-x-2 md:space-x-2 p-1 bg-green-800">
+            <div className="flex justify-center items-center h-32 mt-0 md:w-1/3 w-full rounded-lg space-x-2 md:space-x-2 p-1 bg-green-800">
                 {hand.map((card, index) => (
                     <div
                         key={index}
@@ -24,11 +24,7 @@ function PlayerCardRack({ hand }) {
                     </div>
                 ))}
             </div>
-
-            {/* Player command bar section */}
-            <div className="h-32 w-1/4 mr-2 md:w-1/6 bg-green-800 rounded-lg p-3">
-                <PlayerCommandBar selectedCard={selectedCard} />
-            </div>
+            <PlayerCommandBar selectedCard={selectedCard} />
         </div>
     );
 }
